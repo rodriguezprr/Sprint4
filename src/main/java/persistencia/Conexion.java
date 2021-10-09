@@ -73,10 +73,33 @@ public class Conexion {
         // Realizar la conexin
         */ 
         //conexion para SQLite
-        url = "jdbc:sqlite:Usuario.db";
+        url = "C:\\Users\\rodriguezprr\\Documents\\NetBeansProjects\\Proyectoc3\\Usuario.db";
+        //url =  "\\Usuario.db";
+ 
+        
+        try {
+            Class.forName("org.sqlite.JDBC");
+            con = DriverManager.getConnection("jdbc:sqlite:"+url);
+            con.setTransactionIsolation(8);
+            if (con != null) {
+                DatabaseMetaData meta = con.getMetaData();
+                System.out.println("Base de datos conectada " + meta.getURL());
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println("Error en la conexión de la base de datos");
+        }
+        /*
+        try {
+            //Asignacin del Driver
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         try {
 // Realizar la conexion
             con = DriverManager.getConnection(url);
+            con.setTransactionIsolation(8);
             if (con != null) {
                 DatabaseMetaData meta = con.getMetaData();
                 System.out.println("Base de datos conectada " + meta.getDriverName());
@@ -84,6 +107,7 @@ public class Conexion {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        */
     }
 
     //Retornar la conexin

@@ -16,7 +16,6 @@ import persistencia.Conexion;
  * @author rodriguezprr
  */
 public class Contacto {
-    private int idUsuario;
     private int numeroIdentificacion;
     private String nombre;
     private String apellido;
@@ -39,13 +38,6 @@ public class Contacto {
         return this.getContacto();
     }
     
-    public int getIdUsuario(){
-        return this.idUsuario;
-    }
-    
-    public void setIdUsuario(int idUsuario){
-        this.idUsuario = idUsuario;
-    }
     
     public int getIdentificacion(){
         return this.numeroIdentificacion;
@@ -145,8 +137,8 @@ public class Contacto {
     
     public boolean guardarContacto(){
         Conexion conexion = new Conexion();
-        String sentencia= "INSERT INTO Contactos(idUsuario, numeroIdentificacion, nombre, apellido, genero, tipoIdentificacion, telefono, direccion, email, ciudad, tipoUsuario, contrasena, estado) "
-                + " VALUES ( '" + this.idUsuario + "','" + this.numeroIdentificacion + "','" + this.nombre + "',"
+        String sentencia= "INSERT INTO Contactos( numeroIdentificacion, nombre, apellido, genero, tipoIdentificacion, telefono, direccion, email, ciudad, tipoUsuario, contrasena, estado) "
+                + " VALUES ( '" + this.numeroIdentificacion + "','" + this.nombre + "',"
                 + "'" + this.apellido + "','" + this.genero + "','" + this.tipoIdentificacion + "',"
                 + "'" + this.telefono + "','" + this.direccion + "','" + this.email 
                 + "','" + this.ciudad + "','" + this.tipoUsuario + "','" + this.contrasena + "','" + this.estado +  "');  ";
@@ -168,7 +160,7 @@ public class Contacto {
     }
     
     public boolean borrarContacto(int identificacion){
-        String Sentencia = "DELETE FROM Contactos WHERE identificacion='" + identificacion + "'";
+        String Sentencia = "DELETE FROM Contactos WHERE numeroIdentificacion='" + identificacion + "'";
         Conexion conexion = new Conexion();
         if(conexion.setAutoCommitBD(false)){
             if(conexion.actualizarBD(Sentencia)){
@@ -188,12 +180,12 @@ public class Contacto {
     
     public boolean actualizarContacto(){
         Conexion conexion = new Conexion();
-        String Sentencia = "UPDATE Contactos SET nombre='" + this.nombre + "',apellido'" + this.apellido
+        String Sentencia = "UPDATE Contactos SET nombre='" + this.nombre + "',apellido='" + this.apellido
                 + "',genero='" + this.genero
-                + "',tipoIdentificacion=" + this.tipoIdentificacion + "',telefono='" + this.telefono
+                + "',tipoIdentificacion='" + this.tipoIdentificacion + "',telefono='" + this.telefono
                 + "',direccion='" + this.direccion + "',email='" + this.email
                 + "',ciudad='" + this.ciudad + "',tipoUsuario='" + this.tipoUsuario + "',contrasena='" + this.contrasena + "',estado='" + this.estado
-                + "' WHERE identificacion=" +this.numeroIdentificacion + ";";
+                + "' WHERE numeroIdentificacion=" +this.numeroIdentificacion + ";";
         
         if(conexion.setAutoCommitBD(false)){
             if(conexion.actualizarBD(Sentencia)){
@@ -220,7 +212,6 @@ public class Contacto {
             Contacto c;
             while (rs.next()) {
                 c = new Contacto();
-                c.setIdUsuario(rs.getInt("idUsuario"));
                 c.setIdentificacion(rs.getInt("numeroIdentificacion"));
                 c.setNombre(rs.getString("nombre"));
                 c.setApellido(rs.getString("apellido"));
@@ -249,7 +240,7 @@ public class Contacto {
         String sql = "select * from Contactos where identificacion='" + this.numeroIdentificacion + "'";
         ResultSet rs = conexion.consultarBD(sql);
         if (rs.next()) {
-            this.idUsuario = rs.getInt("idUsuario");
+
             this.numeroIdentificacion = rs.getInt("numeroIdentificacion");
             this.nombre = rs.getString("nombre");
             this.apellido = rs.getString("apellido");
@@ -275,7 +266,7 @@ public class Contacto {
     
     @Override
     public String toString() {
-        return "Contacto{" + "idUsuario=" + idUsuario + "identificacion=" + numeroIdentificacion + ", nombre=" + nombre + ", apellido=" + apellido + 
+        return "Contacto{" + "identificacion=" + numeroIdentificacion + ", nombre=" + nombre + ", apellido=" + apellido + 
                 ", genero=" + genero + ", tipoIdentificacion=" + tipoIdentificacion + ", telefono=" + telefono + 
                 ", direccion=" + direccion + ", correo=" + email 
                 + ", ciudad=" + ciudad + ", tipoUsuario=" + tipoUsuario + ", contrasena=" + contrasena + ", estado=" + estado + '}';
